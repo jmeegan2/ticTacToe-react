@@ -3,7 +3,7 @@ import { useState } from "react";
 
 // https://react.dev/learn/tutorial-tic-tac-toe
 
-function Square({ value }) { //value is the prop here 
+function Square() { //value is the prop here 
   //set value is a function that can be used to change the value 
   const [value, setValue] = useState(null)
 
