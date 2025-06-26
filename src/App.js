@@ -91,13 +91,16 @@ function Board({ xIsNext, squares, onPlay }) { //Board is the component
 
 */
 export default function Game() {
-  const [xIsNext, setXIsNext] = useState(true)
-  const [history, setHistory] = useState([Array(9).fill(null)])
-  const currentSquares = history[history.length - 1];
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [currentMove, setCurrentMove] = useState(0);
+  const xIsNext = currentMove % 2 === 0;
+  const currentSquares = history[currentMove];
+
 
   function handlePlay(nextSquares) {
-    // TODO
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory([...history, nextSquares]);
+    setCurrentMove(nextHistory.length - 1)
     /*
     enumerate all the items in history
 
@@ -105,11 +108,10 @@ export default function Game() {
     string to be expanded in places where zero or more arguments 
     (for function calls) or elements (for array literals) are expected
     */
-    setXIsNext(!xIsNext)
   }
 
   function jumpTo(nextMove) {
-    // TODO
+    setCurrentMove(nextMove)
   }
 
   const moves = history.map((squares, move) => {
@@ -120,7 +122,7 @@ export default function Game() {
       description = 'Go to game start';
     }
     return (
-      <li>
+      <li key={move}>
         <button onClick={() => jumpTo(move)}>{description}</button>
       </li>
     )
